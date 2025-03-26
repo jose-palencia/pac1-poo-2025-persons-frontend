@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 
 interface Props {
     icon?: React.ReactNode;
@@ -9,8 +10,8 @@ interface Props {
 export const NavLink = ({ icon, text, active = false, to }: Props) => {
 
     return (
-        <a
-            href={to}
+        <Link
+            to={to}
             className={`flex items-center px-3 py-2 text-sm font-LexendDeca-Medium
              ${active ? "bg-blue-700 text-white" : "text-blue-100 hover:bg-blue-500"}`} >
 
@@ -19,7 +20,7 @@ export const NavLink = ({ icon, text, active = false, to }: Props) => {
             )}
 
             {text}
-        </a>
+        </Link>
 
     );
 }

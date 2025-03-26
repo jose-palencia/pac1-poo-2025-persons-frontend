@@ -1,5 +1,9 @@
+import { Title } from "../../components/shared/Title"
+
 export const CountriesPage = () => {
   return (
-    <div>CountriesPage</div>
+    <div>
+      <Title text="Países" />
+    </div>
   )
 }

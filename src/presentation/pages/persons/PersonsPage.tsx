@@ -1,5 +1,9 @@
+import { Title } from "../../components/shared/Title"
+
 export const PersonsPage = () => {
   return (
-    <div>PersonsPage</div>
+    <div>
+      <Title text="Personas" />
+    </div>
   )
 }
