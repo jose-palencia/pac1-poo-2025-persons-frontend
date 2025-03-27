@@ -2,15 +2,26 @@ import { Globe, Home, Menu, Users } from "lucide-react";
 import { NavLink } from "../shared/NavLink";
 import { useState } from "react";
 import { MobileNavLink } from "../shared/MobileNavLink";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 
 export const Navbar = () => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    const location = useLocation();
+
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
     }
+
+    const isActive = (path: string) => {
+        if (path === '/') {
+            return location.pathname === '/'
+        }
+
+        return location.pathname.startsWith(path);
+    }
+
 
     return (
         <>
@@ -26,9 +37,9 @@ export const Navbar = () => {
 
                         {/* Navegación en escritorio */}
                         <div className="hidden md:flex">
-                            <NavLink to="/" active text="Inicio" icon={<Home size={18} />} />
-                            <NavLink to="/countries" text="Países" icon={<Globe size={18} />} />
-                            <NavLink to="/persons" text="Personas" icon={<Users size={18} />} />
+                            <NavLink to="/" active={isActive("/")} text="Inicio" icon={<Home size={18} />} />
+                            <NavLink to="/countries" active={isActive("/countries")} text="Países" icon={<Globe size={18} />} />
+                            <NavLink to="/persons" active={isActive("/persons")} text="Personas" icon={<Users size={18} />} />
                         </div>
                         {/* Botón de menu móvil */}
                         <div className="md:hidden flex items-center">
@@ -48,15 +59,15 @@ export const Navbar = () => {
                 {isMenuOpen && (
                     <div className="md:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                            <MobileNavLink to="/" icon={<Home size={18} />} text="Inicio" active />
-                            <MobileNavLink to="/countries" icon={<Globe size={18} />} text="Países" />
-                            <MobileNavLink to="/persons" icon={<Users size={18} />} text="Personas" />
+                            <MobileNavLink to="/" active={isActive("/")} icon={<Home size={18} />} text="Inicio" />
+                            <MobileNavLink to="/countries" active={isActive("/countries")} icon={<Globe size={18} />} text="Países" />
+                            <MobileNavLink to="/persons" active={isActive("/persons")} icon={<Users size={18} />} text="Personas" />
                         </div>
                     </div>
                 )}
 
             </nav>
-        
+
             {/* Principal content */}
             <div className="min-h-screen bg-gray-100 mx-auto p-4 mt-4">
                 <Outlet />
