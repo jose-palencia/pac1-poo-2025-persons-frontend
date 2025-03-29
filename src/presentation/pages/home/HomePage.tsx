@@ -1,8 +1,26 @@
 import { Globe, Users } from "lucide-react"
 import { Title } from "../../components/shared/Title"
 import { DashboardCard } from "../../components/home/DashboardCard"
+import { countsAction } from "../../../core/actions/statistics/counts.action"
+import { useEffect, useState } from "react"
 
 export const HomePage = () => {
+
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const getData = async () => {
+      const result = await countsAction();
+
+      setData(result);
+    }
+
+    getData();
+    
+  }, []);
+
+  console.log(data);
+
   return (
     <div>
       <Title text="Página de Inicio" />
