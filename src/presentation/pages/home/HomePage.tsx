@@ -19,8 +19,6 @@ export const HomePage = () => {
     
   }, []);
 
-  console.log(data);
-
   return (
     <div>
       <Title text="Página de Inicio" />
