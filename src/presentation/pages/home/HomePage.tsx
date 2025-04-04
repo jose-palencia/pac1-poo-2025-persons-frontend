@@ -1,23 +1,19 @@
 import { Globe, Users } from "lucide-react"
 import { Title } from "../../components/shared/Title"
 import { DashboardCard } from "../../components/home/DashboardCard"
-import { countsAction } from "../../../core/actions/statistics/counts.action"
-import { useEffect, useState } from "react"
+import { Loader } from "../../components/shared/Loader"
+import { useStatistics } from "../../hooks/useStatistics"
 
 export const HomePage = () => {
 
-  const [data, setData] = useState();
+  const { data, isLoading } = useStatistics();
 
-  useEffect(() => {
-    const getData = async () => {
-      const result = await countsAction();
+  if(isLoading) {
+    return <Loader />
+  }
 
-      setData(result);
-    }
-
-    getData();
-    
-  }, []);
+  console.log(data);
+  
 
   return (
     <div>
@@ -27,14 +23,14 @@ export const HomePage = () => {
         <DashboardCard
           title="Países"
           to="/countries/create"
-          countValue={150}
+          countValue={data?.data?.countriesCount || 0}
           icon={<Globe size={48} />}
         />
 
         <DashboardCard
           title="Personas"
           to="/persons/create"
-          countValue={15080}
+          countValue={data?.data?.personsCount || 0}
           icon={<Users size={48} />}
         />
 
