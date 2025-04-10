@@ -12,7 +12,11 @@ export const CountriesPage = () => {
     setSearchTerm,
     setPage,
     page,
+    pageSize,
+    setPageSize,
     refreshCountries } = useCountries();
+
+  const pageSizeOptions = [5, 10, 20];
 
   // console.log(countriesPaginationQuery.data);
 
@@ -32,6 +36,23 @@ export const CountriesPage = () => {
     }
   }
 
+  const handlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPageSize(Number(e.target.value));
+    setPage(1);
+  }
+
+  const handlePreviousPage = () => {
+    if (countriesPaginationQuery.data?.data.hasPreviousPage) {
+      setPage(page - 1)
+    }
+  }
+
+  const handleNextPage = () => {
+    if (countriesPaginationQuery.data?.data.hasNextPage) {
+      setPage(page + 1)
+    }
+  }
+
   return (
     <div className="w-full flex flex-col">
       <Title text="Países" />
@@ -46,6 +67,22 @@ export const CountriesPage = () => {
           className="w-full bg-gray-200 rounded-md p-2"
           placeholder="Buscar"
         />
+        <div className="flex items-center gap-2">
+          <span className="text-xs sm:text-sm">
+            Mostrar
+          </span>
+          <select
+            value={pageSize}
+            onChange={handlePageSizeChange}
+            className="bg-gray-200 p-2 rounded-md"
+          >
+            {pageSizeOptions.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+        </div>
         <button
           onClick={handleClickSearch}
           className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
@@ -93,13 +130,26 @@ export const CountriesPage = () => {
         </table>
         {/* Pagination */}
         <div className="flex flex-row items-center justify-between bg-blue-500">
-          <span className="p-2 text-white">Registros 120</span>
+          <span className="p-2 text-white">Registros {countriesPaginationQuery.data?.data.totalItems}</span>
           <div className="flex flex-row items-center gap-2">
-            <button className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
+            <button
+              onClick={handlePreviousPage}
+              disabled={!countriesPaginationQuery.data?.data.hasPreviousPage}
+              className={`flex flex-row items-center justify-center gap-2 p-2 ${
+                !countriesPaginationQuery.data?.data.hasPreviousPage
+                ? "bg-blue-500 text-white rounded-md cursor-not-allowed" 
+                : "bg-blue-500 text-white hover:bg-blue-600 rounded-md cursor-pointer"
+              }`} >
               <ArrowBigLeft size={24} />
               <span>Anterior</span>
             </button>
-            <button className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
+            <button
+              onClick={handleNextPage}
+              className={`flex flex-row items-center justify-center gap-2 p-2 ${
+                !countriesPaginationQuery.data?.data.hasNextPage
+                ? "bg-blue-500 text-white rounded-md cursor-not-allowed" 
+                : "bg-blue-500 text-white hover:bg-blue-600 rounded-md cursor-pointer"
+              }`} >
               <span>Siguiente</span>
               <ArrowBigRight size={24} />
             </button>
