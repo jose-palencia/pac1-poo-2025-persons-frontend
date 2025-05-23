@@ -2,6 +2,7 @@ import { ArrowBigLeft, ArrowBigRight, Edit, Plus, Search, Trash } from "lucide-r
 import { Title } from "../../components/shared/Title"
 import { useCountries } from "../../hooks/useCountries"
 import React, { useState } from "react";
+import { Link } from "react-router";
 
 export const CountriesPage = () => {
 
@@ -89,10 +90,10 @@ export const CountriesPage = () => {
           <Search size={24} />
           <span>Buscar</span>
         </button>
-        <button className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
+        <Link to="create" className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
           <Plus size={24} />
           <span>Agregar</span>
-        </button>
+        </Link>
       </div>
 
       {/* Table */}

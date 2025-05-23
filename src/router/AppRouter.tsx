@@ -3,6 +3,7 @@ import { Navbar } from "../presentation/components/layout/Navbar"
 import { HomePage } from "../presentation/pages/home/HomePage"
 import { CountriesPage } from "../presentation/pages/countries/CountriesPage"
 import { PersonsPage } from "../presentation/pages/persons/PersonsPage"
+import { CreateCountryPage } from "../presentation/pages/countries/CreateCountryPage"
 
 export const AppRouter = () => {
     return (
@@ -11,6 +12,7 @@ export const AppRouter = () => {
                 <Route element={<Navbar />}>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/countries" element={<CountriesPage />} />
+                    <Route path="/countries/create" element={<CreateCountryPage />} />
                     <Route path="/persons" element={<PersonsPage />} />
                 </Route>
             </Routes>
