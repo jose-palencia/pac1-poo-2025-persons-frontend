@@ -116,12 +116,12 @@ export const CountriesPage = () => {
                   <td className="p-2">{country.alphaCode3}</td>
                   <td className="p-2">
                     <div className="flex flex-row items-center gap-2">
-                      <button className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
+                      <Link to={`/countries/${country.id}/edit`} className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
                         <Edit size={18} />
-                      </button>
-                      <button className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
+                      </Link>
+                      <Link to={`/countries/${country.id}/delete`} className="flex flex-row items-center justify-center gap-2 bg-blue-500 text-white hover:bg-blue-600 p-2 rounded-md cursor-pointer" >
                         <Trash size={18} />
-                      </button>
+                      </Link>
                     </div>
                   </td>
                 </tr>

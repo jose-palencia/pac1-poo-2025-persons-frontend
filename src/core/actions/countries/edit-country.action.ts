@@ -5,15 +5,15 @@ import { CountryModel } from "../../models/country.model";
 import { ApiErrorResponse } from "../../../infrastructure/interfaces/api-error.response";
 import { personsApi } from "../../api/persons.api";
 
-export const createCountryAction = async (
-    country: CountryModel
+export const editCountryAction = async (
+    country: CountryModel, countryId: string
 ): Promise<ApiResponse<CountryResponse>> => {
 
     try {
 
         const { data } = await personsApi
-            .post<ApiResponse<CountryResponse>>(
-                "/countries",
+            .put<ApiResponse<CountryResponse>>(
+                `/countries/${countryId}`,
                 country
             );
 

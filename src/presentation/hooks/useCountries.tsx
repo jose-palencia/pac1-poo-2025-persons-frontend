@@ -4,8 +4,10 @@ import { getPaginationCountriesAction } from "../../core/actions/countries/get-p
 import { CountryModel } from "../../core/models/country.model";
 import { createCountryAction } from "../../core/actions/countries/create-country.action";
 import { useNavigate } from "react-router";
+import { getOneCountryAction } from "../../core/actions/countries/get-one-country.action";
+import { editCountryAction } from "../../core/actions/countries/edit-country.action";
 
-export const useCountries = () => {
+export const useCountries = (countryId?: string) => {
   
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -17,6 +19,14 @@ export const useCountries = () => {
     queryKey: ["countries", page, pageSize, searchTerm], // Unique key 
     queryFn: () => getPaginationCountriesAction(page, pageSize, searchTerm),
     staleTime: 1000 * 60 * 5, // 5M
+    refetchOnWindowFocus: false,
+  });
+
+  const oneCountryQuery = useQuery({
+    queryKey: ["country", countryId],
+    queryFn: () => getOneCountryAction(countryId!),
+    enabled: !!countryId,
+    staleTime: 0,
     refetchOnWindowFocus: false,
   });
 
@@ -32,6 +42,19 @@ export const useCountries = () => {
     }
   });
 
+  const editCountryMutation = useMutation({
+    mutationFn: (country: CountryModel) => editCountryAction(country, countryId!),
+    onSuccess: (data) => {
+      if(data.status) {
+        refreshCountries();
+        navigate("/countries");
+      }
+    },
+    onError: (data) => {
+      console.log(data);
+    },
+  });
+
   const refetch = countriesPaginationQuery.refetch;
 
   const refreshCountries = useCallback(() => {
@@ -44,7 +67,9 @@ export const useCountries = () => {
     pageSize,
     searchTerm,
     countriesPaginationQuery,
+    oneCountryQuery,
     createCountryMutation,
+    editCountryMutation,
 
     // Methods
     setPage,

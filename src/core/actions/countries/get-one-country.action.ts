@@ -1,21 +1,16 @@
 import { AxiosError } from "axios";
 import { ApiResponse } from "../../../infrastructure/interfaces/api.response";
-import { CountryResponse } from "../../../infrastructure/interfaces/country.response";
-import { CountryModel } from "../../models/country.model";
+import { OneCountryResponse } from "../../../infrastructure/interfaces/one-country.response";
 import { ApiErrorResponse } from "../../../infrastructure/interfaces/api-error.response";
 import { personsApi } from "../../api/persons.api";
 
-export const createCountryAction = async (
-    country: CountryModel
-): Promise<ApiResponse<CountryResponse>> => {
+export const getOneCountryAction = async (countryId: string):
+    Promise<ApiResponse<OneCountryResponse>> => {
 
     try {
 
         const { data } = await personsApi
-            .post<ApiResponse<CountryResponse>>(
-                "/countries",
-                country
-            );
+        .get<ApiResponse<OneCountryResponse>>(`/countries/${countryId}`);
 
         return data;
 

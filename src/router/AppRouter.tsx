@@ -4,6 +4,7 @@ import { HomePage } from "../presentation/pages/home/HomePage"
 import { CountriesPage } from "../presentation/pages/countries/CountriesPage"
 import { PersonsPage } from "../presentation/pages/persons/PersonsPage"
 import { CreateCountryPage } from "../presentation/pages/countries/CreateCountryPage"
+import { EditCountryPage } from "../presentation/pages/countries/EditCountryPage"
 
 export const AppRouter = () => {
     return (
@@ -13,6 +14,7 @@ export const AppRouter = () => {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/countries" element={<CountriesPage />} />
                     <Route path="/countries/create" element={<CreateCountryPage />} />
+                    <Route path="/countries/:countryId/edit" element={<EditCountryPage />} />
                     <Route path="/persons" element={<PersonsPage />} />
                 </Route>
             </Routes>
