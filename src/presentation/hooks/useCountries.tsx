@@ -6,6 +6,7 @@ import { createCountryAction } from "../../core/actions/countries/create-country
 import { useNavigate } from "react-router";
 import { getOneCountryAction } from "../../core/actions/countries/get-one-country.action";
 import { editCountryAction } from "../../core/actions/countries/edit-country.action";
+import { deleteCountryAction } from "../../core/actions/countries/delete-country.action";
 
 export const useCountries = (countryId?: string) => {
   
@@ -55,6 +56,19 @@ export const useCountries = (countryId?: string) => {
     },
   });
 
+  const deleteCountryMutation = useMutation({
+    mutationFn: () => deleteCountryAction(countryId!),
+    onSuccess: (data) => {
+      if(data.status) {
+        refreshCountries();
+        navigate("/countries");
+      }
+    },
+    onError: (data) => {
+      console.log(data);
+    },
+  });
+
   const refetch = countriesPaginationQuery.refetch;
 
   const refreshCountries = useCallback(() => {
@@ -70,6 +84,7 @@ export const useCountries = (countryId?: string) => {
     oneCountryQuery,
     createCountryMutation,
     editCountryMutation,
+    deleteCountryMutation,
 
     // Methods
     setPage,
